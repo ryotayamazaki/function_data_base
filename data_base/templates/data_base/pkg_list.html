@@ -34,7 +34,8 @@ table {
           <td>{{ pkg.tag }}</td>
           <td>
             <a href="{% url 'data_base:pkg_mod' pkg_id=pkg.id %}" class="btn btn-default btn-sm">修正</a>
-            <a href="{% url 'data_base:pkg_del' pkg_id=pkg.id %}" class="btn btn-default btn-sm">削除</a>
+            <!--a href="{% url 'data_base:pkg_del' pkg_id=pkg.id %}" class="btn btn-default btn-sm">削除</a-->
+            <a href="{% url 'data_base:pkg_del_check' target_id=pkg.id %}" class="btn btn-default btn-sm btn-primary" target="_blank">削除</a>
             <a href="{% url 'data_base:proglam_list' pkg_id=pkg.id %}" class="btn btn-default btn-sm btn-primary">pkgの詳細</a>
           </td>
         </tr>

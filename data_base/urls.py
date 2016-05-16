@@ -21,4 +21,8 @@ urlpatterns = [#patterns('',
         url(r'^function/mod/(?P<proglam_id>\d+)/(?P<function_id>\d+)/$', views.function_edit, name='function_mod'),  # 修正
         url(r'^function/del/(?P<proglam_id>\d+)/(?P<function_id>\d+)/$', views.function_del, name='function_del'),   # 削除
         url(r'^function/view/(?P<function_id>\d+)/$', views.function_view, name='function_view'),
+
+        url(r'^pkg/del_check/(?P<target_id>\d+)/$', views.pkg_del_check, name='pkg_del_check'),
+        url(r'^proglam/del_check/(?P<target_id>\d+)/(?P<link_id>\d+)/$', views.pro_del_check, name='pro_del_check'),
+        url(r'^function/del_check/(?P<target_id>\d+)/(?P<link_id>\d+)/$', views.func_del_check, name='func_del_check'),
 ]#)

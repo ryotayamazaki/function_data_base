@@ -1,0 +1,15 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!--Html Lang="ja"-->
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}">
+<meta charset="UTF-8">
+<Head>
+<Title>確認</Title>
+</Head>
+<Body>
+<Center>
+<p>本当にこの関数を削除しますか？</p>
+<a href="{% url 'data_base:function_del' proglam_id=link_id function_id=target_id %}" class="btn btn-default btn-sm">削除</a>
+<Form><Input type="button" value="閉じる" onClick="javascript:window.close();"></Form> 
+</Center>
+</Body>
+</Html>

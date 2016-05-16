@@ -157,6 +157,7 @@ def function_del(request, proglam_id, function_id):
     function = get_object_or_404(Function, pk=function_id)
     function.delete()
     return redirect('data_base:function_list', proglam_id=proglam_id)
+#    return HttpResponse('keseta')
 
 
 def function_view(request, function_id):
@@ -164,5 +165,19 @@ def function_view(request, function_id):
 #    return HttpResponse('functionのsyousai')
     function = get_object_or_404(Function, pk=function_id)
     return render(request, 'data_base/function_view.html', dict(function=function))
+
+
+def pkg_del_check(request, target_id):
+    return render(request, 'data_base/pkg_del_check.html',dict(target_id=target_id))
+
+
+def func_del_check(request, target_id, link_id=None):
+    return render(request, 'data_base/func_del_check.html',dict(target_id=target_id, link_id=link_id))
+
+
+def pro_del_check(request, target_id, link_id=None):
+#    return HttpResponse('pkgの一覧')
+#    target = get_object_or_404(Function, pk=target_id)
+    return render(request, 'data_base/pro_del_check.html',dict(target_id=target_id, link_id=link_id))
 
 
