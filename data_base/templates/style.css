@@ -1,0 +1,102 @@
+#page {
+    width: 1158px;
+    margin: 0 auto 0 auto;
+    background-color: rgb(255,255,255);
+}
+
+#site_title {
+    width: 1138px;
+    margin: 0 auto 10px auto;
+}
+
+#site_title h1 {
+    margin: 0 0 0 0;
+}
+
+#site_title img {
+    border: none;
+}
+
+#header {
+    width: 1138px;
+    margin: 0px auto 10px auto;
+}page {
+    width: 1238px;
+    margin: 0 auto 0 auto;
+    background-color: rgb(255,255,255);
+}
+
+#site_title {
+    width: 1078px;
+    margin: 0 auto 10px auto;
+}
+
+#site_title h1 {
+    margin: 0 0 0 0;
+}
+
+#site_title img {
+    border: none;
+}
+
+#header {
+    width: 1138px;
+    margin: 0px auto 10px auto;
+}
+
+#center {
+margin: 0px 5px 0px 5px;
+width: 828px;
+float: right;
+}
+
+#center h1 {
+margin: 0px 4px 10px 4px;
+padding: 6px 4px;
+color: rgb(0,0,0);
+background-color: rgb(255,255,255);
+border: 2px rgb(64,64,64) solid;
+}
+
+#left {
+margin: 0px 5px 0px 5px;
+width: 300px;
+}
+
+#footer {
+    padding: 10px 0px 10px 0px;
+    border-top: 2px rgb(128,128,128) solid;
+    text-align: center;
+}
+
+p {
+    margin: 6px 4px;
+}
+
+.subcontents {
+    margin: 0px 0px 10px 0px;
+    border: 2px rgb(128,128,128) solid;
+    background-color: rgb(255,255,255);
+}
+
+.subcontents h2 {
+    margin: 0px;
+    padding: 6px 4px 6px 4px;
+    background-color: rgb(255,255,255);
+}
+
+.maincontents {
+    margin: 0px 0px 10px 0px;
+    border: 2px rgb(128,128,128) solid;
+    background-color: rgb(255,255,255);
+}
+
+.maincontents h2 {
+    margin: 0px;
+    padding: 6px 4px 6px 4px;
+    background-color: rgb(255,255,255); 
+}
+
+.clear {
+    clear:both;
+}

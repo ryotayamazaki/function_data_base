@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a href="{% url 'data_base:edit' %}">投稿画面</a>
+    {% for data_base in data_bases %}
+        <h3>日付</h3>
+        {{ data_base.date }}
+        <h3>タイトル</h3>
+        {{ data_base.title }}
+        <h4>本文</h4>
+        {{ data_base.text }}
+    {% endfor %}
+{% endblock content %}

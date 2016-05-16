@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ function.name }}{% endblock title %}
+
+{% block extrahead %}
+<script>
+$(function() {
+  $('.del_confirm').on('click', function () {
+     $("#del_pk").text($(this).attr("pk"));
+     $('#del_url').attr('href', $(this).attr("url"));
+  });
+});
+</script>
+<style>
+table {
+  margin-top: 8px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ function.name }}</h1>
+    <h3>機能</h3>
+    <p>{{ function.mightiness }}</p>
+    <h3>作成者</h3>
+    <p>{{ function.maker }}</p>
+    <h3>git</h3>
+    <a href=function.git>{{ function.git }}</a>
+    <div>
+    {% if function.link %}
+      <a href="{% url 'data_base:function_list' proglam_id=function.link.id%}" class="btn btn-default btn-sm">戻る</a>
+    {% endif %}
+    </div>
+
+{% endblock content %}
+

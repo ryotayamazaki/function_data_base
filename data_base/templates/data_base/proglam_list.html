@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}{{ pkg.name }}{% endblock title %}
+
+{% block extrahead %}
+<script>
+$(function() {
+  $('.del_confirm').on('click', function () {
+     $("#del_pk").text($(this).attr("pk"));
+     $('#del_url').attr('href', $(this).attr("url"));
+  });
+});
+</script>
+<style>
+table {
+  margin-top: 8px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ pkg.name }}</h1>
+    <h3>機能</h3>
+    <p>{{ pkg.mightiness }}</p>
+    <h3>作成者</h3>
+    <p>{{ pkg.maker }}</h3>
+    <h3>git</h3>
+    <a href=pkg.git>{{ pkg.git }}</a>
+    <h3 class="page-header">proglamの一覧 <small>{{ pkg.name }}</small></h3>
+    <a href="{% url 'data_base:proglam_add' pkg_id=pkg.id %}" class="btn btn-default btn-sm">追加</a>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>プログラム名</th>
+          <th>使用関数</th>
+          <th>作成者</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if proglams %}
+          {% for proglam in proglams %}
+          <tr>
+            <td>{{ proglam.name }}</td>
+            <td>{{ proglam.child }}</td>
+            <td>{{ proglam.maker }}</td>
+            <!--td>{{ impression.comment|linebreaksbr }}</td-->
+            <td>
+              <a href="{% url 'data_base:proglam_mod' pkg_id=pkg.id proglam_id=proglam.id %}" class="btn btn-default btn-sm">修正</a>
+              <button class="btn btn-default btn-sm del_confirm" data-toggle="modal" data-target="#deleteModal" pk="{{ proglam.id }}" url="{% url 'data_base:proglam_del' pkg_id=pkg.id proglam_id=proglam.id %}">削除</button>
+              <a href="{% url 'data_base:function_list' proglam_id=proglam.id %}" class="btn btn-default btn-sm btn-primary">プログラムの詳細</a>
+            </td>
+          </tr>
+          {% endfor %}
+        {% else %}
+          <tr>
+            <td>---</td>
+            <td>---</td>
+            <td>---</td>
+            <td>---</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+
+    {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">&laquo;</a></li>
+      {% endif %}
+      {% for linkpage in page_obj.paginator.page_range %}
+        {% ifequal linkpage page_obj.number %}
+          <li  class="active"><a href="#">{{ linkpage }}</a></li>
+        {% else %}
+          <li><a href="?page={{ linkpage }}">{{ linkpage }}</a></li>
+        {% endifequal %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">&raquo;</a></li>
+      {% endif %}
+    </ul>
+    {% endif %}
+
+    <div>
+      <a href="{% url 'data_base:pkg_list' %}" class="btn btn-default btn-sm">戻る</a>
+    </div>
+<br>
+
+{# 削除を確認するモーダル ダイアログ #}
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="deleteModalLabel">確認</h4>
+      </div>
+      <div class="modal-body">
+        <p>ID: <span id="del_pk"></span> を削除しますか？</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-primary" id="del_url">OK</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}pkgの一覧{% endblock title %}
+
+{% block extrahead %}
+<style>
+table {
+  margin-top: 8px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+    <h3 class="page-header">pkgの一覧</h3>
+    <a href="{% url 'data_base:pkg_add' %}" class="btn btn-default btn-sm">追加</a>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <!--th>ID</th-->
+          <th>パッケージ名</th>
+          <th>作成者</th>
+          <th>使用プログラム</th>
+          <th>タグ</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if pkgs %}
+        {% for pkg in pkgs %}
+        <tr>
+          <td>{{ pkg.name }}</td>
+          <td>{{ pkg.maker }}</td>
+          <td>{{ pkg.child }}</td>
+          <td>{{ pkg.tag }}</td>
+          <td>
+            <a href="{% url 'data_base:pkg_mod' pkg_id=pkg.id %}" class="btn btn-default btn-sm">修正</a>
+            <a href="{% url 'data_base:pkg_del' pkg_id=pkg.id %}" class="btn btn-default btn-sm">削除</a>
+            <a href="{% url 'data_base:proglam_list' pkg_id=pkg.id %}" class="btn btn-default btn-sm btn-primary">pkgの詳細</a>
+          </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+          <tr>
+            <td>---</td>
+            <td>---</td>
+            <td>---</td>
+            <td>---</td>
+          </tr>
+        {% endif %}
+      </tbody>
+    </table>
+{% endblock content %}
