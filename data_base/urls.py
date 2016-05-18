@@ -25,4 +25,22 @@ urlpatterns = [#patterns('',
         url(r'^pkg/del_check/(?P<target_id>\d+)/$', views.pkg_del_check, name='pkg_del_check'),
         url(r'^proglam/del_check/(?P<target_id>\d+)/(?P<link_id>\d+)/$', views.pro_del_check, name='pro_del_check'),
         url(r'^function/del_check/(?P<target_id>\d+)/(?P<link_id>\d+)/$', views.func_del_check, name='func_del_check'),
+
+        url(r'^pkg/updated/(?P<pkg_id>\d+)/$', views.PkgUpdatedList.as_view(), name='pkgupdated_list'),
+        url(r'^pkg/updated/add/(?P<pkg_id>\d+)/$', views.pkgupdated_edit, name='pkgupdated_add'),        # 登録
+        url(r'^pkg/updated/mod/(?P<pkg_id>\d+)/(?P<pkgupdated_id>\d+)/$', views.pkgupdated_edit, name='pkgupdated_mod'),  # 修正
+        url(r'^pkg/updated/del/(?P<pkg_id>\d+)/(?P<pkgupdated_id>\d+)/$', views.pkgupdated_del, name='pkgupdated_del'),
+        url(r'^pkg/updated/del_check/(?P<target_id>\d+)/(?P<link_id>\d+)/$', views.pkgupdated_del_check, name='pkgupdated_del_check'),
+
+        url(r'^proglam/updated/(?P<proglam_id>\d+)/$', views.ProglamUpdatedList.as_view(), name='proglamupdated_list'),
+        url(r'^proglam/updated/add/(?P<proglam_id>\d+)/$', views.proglamupdated_edit, name='proglamupdated_add'),        # 登録
+        url(r'^proglam/updated/mod/(?P<proglam_id>\d+)/(?P<proglamupdated_id>\d+)/$', views.proglamupdated_edit, name='proglamupdated_mod'),  # 修正
+        url(r'^proglam/updated/del/(?P<proglam_id>\d+)/(?P<proglamupdated_id>\d+)/$', views.proglamupdated_del, name='proglamupdated_del'),
+        url(r'^proglam/updated/del_check/(?P<target_id>\d+)/(?P<link_id>\d+)/$', views.proglamupdated_del_check, name='proglamupdated_del_check'),
+        
+        url(r'^function/updated/(?P<function_id>\d+)/$', views.FunctionUpdatedList.as_view(), name='functionupdated_list'),
+        url(r'^function/updated/add/(?P<function_id>\d+)/$', views.functionupdated_edit, name='functionupdated_add'),        # 登録
+        url(r'^function/updated/mod/(?P<function_id>\d+)/(?P<functionupdated_id>\d+)/$', views.functionupdated_edit, name='functionupdated_mod'),  # 修正
+        url(r'^function/updated/del/(?P<function_id>\d+)/(?P<functionupdated_id>\d+)/$', views.functionupdated_del, name='functionupdated_del'),
+        url(r'^function/updated/del_check/(?P<target_id>\d+)/(?P<link_id>\d+)/$', views.functionupdated_del_check, name='functionupdated_del_check'),
 ]#)

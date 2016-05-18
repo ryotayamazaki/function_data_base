@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}{{ pkg.name }}{% endblock title %}
+
+{% block extrahead %}
+<script>
+$(function() {
+  $('.del_confirm').on('click', function () {
+     $("#del_pk").text($(this).attr("pk"));
+     $('#del_url').attr('href', $(this).attr("url"));
+  });
+});
+</script>
+<style>
+table {
+  margin-top: 8px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ pkg.name }}</h1>
+    <h3>機能</h3>
+    <p>{{ pkg.mightiness }}</p>
+    <h3>作成者</h3>
+    <p>{{ pkg.maker }}</h3>
+    <h3>git</h3>
+    <a href=pkg.git>{{ pkg.git }}</a>
+    <h3 class="page-header">更新履歴 <small>{{ pkg.name }}</small></h3>
+    <a href="{% url 'data_base:pkgupdated_add' pkg_id=pkg.id %}" class="btn btn-default btn-sm">追加</a>
+        {% if pkgupdateds %}
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>更新日</th>
+                <th>更新内容</th>
+                <th>更新理由</th>
+                <th>更新者</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for pkgupdated in pkgupdateds %}
+                <tr>
+                <td>{{ pkgupdated.date }}</td>
+                <td>{{ pkgupdated.content }}</td>
+                <td>{{ pkgupdated.reason }}</td>
+                <td>{{ pkgupdated.maker }}</td>
+                <td>
+                  <a href="{% url 'data_base:pkgupdated_mod' pkg_id=pkg.id pkgupdated_id=pkgupdated.id %}" class="btn btn-default btn-sm">修正</a>
+                  <a href="{% url 'data_base:pkgupdated_del_check' link_id=pkg.id target_id=pkgupdated.id %}" class="btn btn-default btn-sm btn-primary" target="_blank">削除</a>
+                </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        {% else %}
+          <p>更新なし</p>
+        {% endif %}
+
+    {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">&laquo;</a></li>
+      {% endif %}
+      {% for linkpage in page_obj.paginator.page_range %}
+        {% ifequal linkpage page_obj.number %}
+          <li  class="active"><a href="#">{{ linkpage }}</a></li>
+        {% else %}
+          <li><a href="?page={{ linkpage }}">{{ linkpage }}</a></li>
+        {% endifequal %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">&raquo;</a></li>
+      {% endif %}
+    </ul>
+    {% endif %}
+
+    <div>
+      <a href="{% url 'data_base:proglam_list' pkg_id=pkg.id%}" class="btn btn-default btn-sm">戻る</a>
+    </div>
+<br>
+{% endblock content %}
+

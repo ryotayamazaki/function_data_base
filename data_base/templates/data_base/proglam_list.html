@@ -26,6 +26,8 @@ table {
     <p>{{ pkg.maker }}</h3>
     <h3>git</h3>
     <a href=pkg.git>{{ pkg.git }}</a>
+    <br><br>
+    <a href="{% url 'data_base:pkgupdated_list' pkg_id=pkg.id %}" class="btn btn-default btn-sm">更新履歴</a>
     <h3 class="page-header">proglamの一覧 <small>{{ pkg.name }}</small></h3>
     <a href="{% url 'data_base:proglam_add' pkg_id=pkg.id %}" class="btn btn-default btn-sm">追加</a>
     <table class="table table-striped table-bordered">

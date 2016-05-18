@@ -2,8 +2,8 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
-from data_base.models import data_basedata, Pkg, Proglam, Function
-from data_base.forms import PkgForm, ProglamForm, FunctionForm
+from data_base.models import data_basedata, Pkg, Proglam, Function, Pkg_updated, Proglam_updated, Function_updated
+from data_base.forms import PkgForm, ProglamForm, FunctionForm, PkgupdatedForm, ProglamupdatedForm, FunctionupdatedForm
 from django.forms import ModelForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic.list import ListView
@@ -70,6 +70,141 @@ def pkg_del(request, pkg_id):
     return redirect('data_base:pkg_list')
 
 
+def pkgupdated_edit(request, pkg_id, pkgupdated_id=None):
+    """proglamの編集"""
+    pkg = get_object_or_404(Pkg, pk=pkg_id)  # 親の書籍を読む
+    if pkgupdated_id:   # impression_id が指定されている (修正時)
+        pkgupdated = get_object_or_404(Pkg_updated, pk=pkgupdated_id)
+    else:               # impression_id が指定されていない (追加時)
+        pkgupdated = Pkg_updated()
+
+    if request.method == 'POST':
+        form = PkgupdatedForm(request.POST, instance=pkgupdated)  # POST された request データからフォームを作成
+        if form.is_valid():    # フォームのバリデーション
+            pkgupdated = form.save(commit=False)
+            pkgupdated.link = pkg  # この感想の、親の書籍をセット
+            pkgupdated.save()
+            return redirect('data_base:pkgupdated_list', pkg_id=pkg_id)
+    else:    # GET の時
+        form = PkgupdatedForm(instance=pkgupdated)  # impression インスタンスからフォームを作成
+
+    return render(request,
+                  'data_base/pkgupdated_edit.html',
+                  dict(form=form, pkg_id=pkg_id, pkgupdated_id=pkgupdated_id))
+
+
+class PkgUpdatedList(ListView):
+    """proglamの一覧"""
+    context_object_name='pkgupdateds'
+    template_name='data_base/pkg_updated_list.html'
+    paginate_by = 10  # １ページは最大2件ずつでページングする
+
+    def get(self, request, *args, **kwargs):
+        pkg = get_object_or_404(Pkg, pk=kwargs['pkg_id'])  # 親の書籍を読む
+        pkgupdateds = pkg.pkg_updateds.all().order_by('-id')   # 書籍の子供の、感想を読む
+        self.object_list = pkgupdateds
+
+        context = self.get_context_data(object_list=self.object_list, pkg=pkg)
+        return self.render_to_response(context)
+
+ 
+def pkgupdated_del(request, pkg_id, pkgupdated_id):
+    """proglam"""
+    pkgupdated = get_object_or_404(Pkg_updated, pk=pkgupdated_id)
+    pkgupdated.delete()
+    return redirect('data_base:pkgupdated_list', pkg_id=pkg_id)
+
+
+def proglamupdated_edit(request, proglam_id, proglamupdated_id=None):
+    """proglamの編集"""
+    proglam = get_object_or_404(Proglam, pk=proglam_id)  # 親の書籍を読む
+    if proglamupdated_id:   # impression_id が指定されている (修正時)
+        proglamupdated = get_object_or_404(Proglam_updated, pk=proglamupdated_id)
+    else:               # impression_id が指定されていない (追加時)
+        proglamupdated = Proglam_updated()
+
+    if request.method == 'POST':
+        form = ProglamupdatedForm(request.POST, instance=proglamupdated)  # POST された request データからフォームを作成
+        if form.is_valid():    # フォームのバリデーション
+            proglamupdated = form.save(commit=False)
+            proglamupdated.link = proglam  # この感想の、親の書籍をセット
+            proglamupdated.save()
+            return redirect('data_base:proglamupdated_list', proglam_id=proglam_id)
+    else:    # GET の時
+        form = ProglamupdatedForm(instance=proglamupdated)  # impression インスタンスからフォームを作成
+
+    return render(request,
+                  'data_base/proglamupdated_edit.html',
+                  dict(form=form, proglam_id=proglam_id, proglamupdated_id=proglamupdated_id))
+
+
+class ProglamUpdatedList(ListView):
+    """proglamの一覧"""
+    context_object_name='proglamupdateds'
+    template_name='data_base/proglam_updated_list.html'
+    paginate_by = 10  # １ページは最大2件ずつでページングする
+
+    def get(self, request, *args, **kwargs):
+        proglam = get_object_or_404(Proglam, pk=kwargs['proglam_id'])  # 親の書籍を読む
+        proglamupdateds = proglam.proglam_updateds.all().order_by('-id')   # 書籍の子供の、感想を読む
+        self.object_list = proglamupdateds
+
+        context = self.get_context_data(object_list=self.object_list, proglam=proglam)
+        return self.render_to_response(context)
+
+ 
+def proglamupdated_del(request, proglam_id, proglamupdated_id):
+    """proglam"""
+    proglamupdated = get_object_or_404(Proglam_updated, pk=proglamupdated_id)
+    proglamupdated.delete()
+    return redirect('data_base:proglamupdated_list', proglam_id=proglam_id)
+
+
+def functionupdated_edit(request, function_id, functionupdated_id=None):
+    """proglamの編集"""
+    function = get_object_or_404(Function, pk=function_id)  # 親の書籍を読む
+    if functionupdated_id:   # impression_id が指定されている (修正時)
+        functionupdated = get_object_or_404(Function_updated, pk=functionupdated_id)
+    else:               # impression_id が指定されていない (追加時)
+        functionupdated = Function_updated()
+
+    if request.method == 'POST':
+        form = FunctionupdatedForm(request.POST, instance=functionupdated)  # POST された request データからフォームを作成
+        if form.is_valid():    # フォームのバリデーション
+            functionupdated = form.save(commit=False)
+            functionupdated.link = function  # この感想の、親の書籍をセット
+            functionupdated.save()
+            return redirect('data_base:functionupdated_list', function_id=function_id)
+    else:    # GET の時
+        form = FunctionupdatedForm(instance=functionupdated)  # impression インスタンスからフォームを作成
+
+    return render(request,
+                  'data_base/functionupdated_edit.html',
+                  dict(form=form, function_id=function_id, functionupdated_id=functionupdated_id))
+
+
+class FunctionUpdatedList(ListView):
+    """proglamの一覧"""
+    context_object_name='functionupdateds'
+    template_name='data_base/function_updated_list.html'
+    paginate_by = 10  # １ページは最大2件ずつでページングする
+
+    def get(self, request, *args, **kwargs):
+        function = get_object_or_404(Function, pk=kwargs['function_id'])  # 親の書籍を読む
+        functionupdateds = function.function_updateds.all().order_by('-id')   # 書籍の子供の、感想を読む
+        self.object_list = functionupdateds
+
+        context = self.get_context_data(object_list=self.object_list, function=function)
+        return self.render_to_response(context)
+
+ 
+def functionupdated_del(request, function_id, functionupdated_id):
+    """proglam"""
+    functionupdated = get_object_or_404(Function_updated, pk=functionupdated_id)
+    functionupdated.delete()
+    return redirect('data_base:functionupdated_list', function_id=function_id)
+
+
 class ProglamList(ListView):
     """proglamの一覧"""
     context_object_name='proglams'
@@ -81,7 +216,7 @@ class ProglamList(ListView):
         proglams = pkg.proglams.all().order_by('id')   # 書籍の子供の、感想を読む
         self.object_list = proglams
 
-        context = self.get_context_data(object_list=self.object_list, pkg=pkg)    
+        context = self.get_context_data(object_list=self.object_list, pkg=pkg)
         return self.render_to_response(context)
 
 
@@ -179,5 +314,17 @@ def pro_del_check(request, target_id, link_id=None):
 #    return HttpResponse('pkgの一覧')
 #    target = get_object_or_404(Function, pk=target_id)
     return render(request, 'data_base/pro_del_check.html',dict(target_id=target_id, link_id=link_id))
+
+
+def pkgupdated_del_check(request, target_id, link_id=None):
+    return render(request, 'data_base/pkgupdated_del_check.html',dict(target_id=target_id, link_id=link_id))
+
+
+def proglamupdated_del_check(request, target_id, link_id=None):
+    return render(request, 'data_base/proglamupdated_del_check.html',dict(target_id=target_id, link_id=link_id))
+
+
+def functionupdated_del_check(request, target_id, link_id=None):
+    return render(request, 'data_base/functionupdated_del_check.html',dict(target_id=target_id, link_id=link_id))
 
 

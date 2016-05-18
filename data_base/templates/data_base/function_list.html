@@ -26,6 +26,8 @@ table {
     <p>{{ proglam.maker }}</p>
     <h3>git</h3>
     <a href=proglam.git>{{ proglam.git }}</a>
+    <br><br>
+    <a href="{% url 'data_base:proglamupdated_list' proglam_id=proglam.id %}" class="btn btn-default btn-sm">更新履歴</a>
     <h3 class="page-header">functionの一覧 <small>{{ proglam.name }}</small></h3>
     <a href="{% url 'data_base:function_add' proglam_id=proglam.id %}" class="btn btn-default btn-sm">追加</a>
     <table class="table table-striped table-bordered">

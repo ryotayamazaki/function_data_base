@@ -26,8 +26,11 @@ table {
     <p>{{ function.maker }}</p>
     <h3>git</h3>
     <a href=function.git>{{ function.git }}</a>
+    <br><br>
+    <a href="{% url 'data_base:functionupdated_list' function_id=function.id %}" class="btn btn-default btn-sm">更新履歴</a>
     <div>
     {% if function.link %}
+      <br>
       <a href="{% url 'data_base:function_list' proglam_id=function.link.id%}" class="btn btn-default btn-sm">戻る</a>
     {% endif %}
     </div>

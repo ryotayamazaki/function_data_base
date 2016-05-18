@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}{{ progkam.name }}{% endblock title %}
+
+{% block extrahead %}
+<script>
+$(function() {
+  $('.del_confirm').on('click', function () {
+     $("#del_pk").text($(this).attr("pk"));
+     $('#del_url').attr('href', $(this).attr("url"));
+  });
+});
+</script>
+<style>
+table {
+  margin-top: 8px;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+    <h1>{{ function.name }}</h1>
+    <h3>機能</h3>
+    <p>{{ function.mightiness }}</p>
+    <h3>作成者</h3>
+    <p>{{ function.maker }}</h3>
+    <h3>git</h3>
+    <a href=function.git>{{ function.git }}</a>
+    <h3 class="page-header">更新履歴 <small>{{ function.name }}</small></h3>
+    <a href="{% url 'data_base:functionupdated_add' function_id=function.id %}" class="btn btn-default btn-sm">追加</a>
+        {% if functionupdateds %}
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>更新日</th>
+                <th>更新内容</th>
+                <th>更新理由</th>
+                <th>更新者</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for functionupdated in functionupdateds %}
+                <tr>
+                <td>{{ functionupdated.date }}</td>
+                <td>{{ functionupdated.content }}</td>
+                <td>{{ functionupdated.reason }}</td>
+                <td>{{ functionupdated.maker }}</td>
+                <td>
+                  <a href="{% url 'data_base:functionupdated_mod' function_id=function.id functionupdated_id=functionupdated.id %}" class="btn btn-default btn-sm">修正</a>
+                  <a href="{% url 'data_base:functionupdated_del_check' link_id=function.id target_id=functionupdated.id %}" class="btn btn-default btn-sm btn-primary" target="_blank">削除</a>
+                </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+        {% else %}
+          <br>
+          <p>更新なし</p>
+        {% endif %}
+
+    {% if is_paginated %}
+    <ul class="pagination">
+      {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">&laquo;</a></li>
+      {% endif %}
+      {% for linkpage in page_obj.paginator.page_range %}
+        {% ifequal linkpage page_obj.number %}
+          <li  class="active"><a href="#">{{ linkpage }}</a></li>
+        {% else %}
+          <li><a href="?page={{ linkpage }}">{{ linkpage }}</a></li>
+        {% endifequal %}
+      {% endfor %}
+      {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><a href="#">&raquo;</a></li>
+      {% endif %}
+    </ul>
+    {% endif %}
+
+    <div>
+      <a href="{% url 'data_base:function_view' function_id=function.id%}" class="btn btn-default btn-sm">戻る</a>
+    </div>
+<br>
+{% endblock content %}
+
+
