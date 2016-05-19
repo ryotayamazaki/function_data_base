@@ -5,7 +5,7 @@
 
 {% block content %}
     <h3 class="page-header">functionの編集</h3>
-    {% if impression_id %}
+    {% if function_id %}
     <form action="{% url 'data_base:function_mod' proglam_id=proglam_id function_id=function_id %}" method="post" class="form-horizontal" role="form">
     {% else %}
     <form action="{% url 'data_base:function_add' proglam_id=proglam_id %}" method="post" class="form-horizontal" role="form">

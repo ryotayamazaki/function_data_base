@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+from django import forms
 from django.forms import ModelForm
 from data_base.models import Pkg, Proglam, Function, Pkg_updated, Function_updated, Proglam_updated
 
@@ -39,3 +41,9 @@ class FunctionupdatedForm(ModelForm):
     class Meta:
         model = Function_updated
         fields = ('date', 'maker', 'content', 'reason', )
+
+
+class FunctionSearchForm(forms.Form):
+    """検索のフォーム"""
+    #class Meta:
+    function_name = forms.CharField(min_length=2,max_length=100)

@@ -3,10 +3,11 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.template import RequestContext
 from data_base.models import data_basedata, Pkg, Proglam, Function, Pkg_updated, Proglam_updated, Function_updated
-from data_base.forms import PkgForm, ProglamForm, FunctionForm, PkgupdatedForm, ProglamupdatedForm, FunctionupdatedForm
+from data_base.forms import PkgForm, ProglamForm, FunctionForm, PkgupdatedForm, ProglamupdatedForm, FunctionupdatedForm, FunctionSearchForm
 from django.forms import ModelForm
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.views.generic.list import ListView
+from django.db.models import Q
 
 # Create your views here.
 class data_baseform(ModelForm):
@@ -327,4 +328,20 @@ def proglamupdated_del_check(request, target_id, link_id=None):
 def functionupdated_del_check(request, target_id, link_id=None):
     return render(request, 'data_base/functionupdated_del_check.html',dict(target_id=target_id, link_id=link_id))
 
+
+def search(request):
+    form = FunctionSearchForm()
+    if request.method == 'GET':
+        return render_to_response(
+            'data_base/search.html', {'form': form}, RequestContext(request))
+    else:
+        form = FunctionSearchForm(request.POST)
+
+        functions = Function.objects.filter(Q(name__contains=form['function_name'].value()))
+
+    form = FunctionSearchForm(request.POST)
+    return render_to_response(
+        'data_base/result.html',
+        {'form':form['function_name'], 'functions':functions},
+    )
 

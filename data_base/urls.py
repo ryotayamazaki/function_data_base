@@ -43,4 +43,7 @@ urlpatterns = [#patterns('',
         url(r'^function/updated/mod/(?P<function_id>\d+)/(?P<functionupdated_id>\d+)/$', views.functionupdated_edit, name='functionupdated_mod'),  # 修正
         url(r'^function/updated/del/(?P<function_id>\d+)/(?P<functionupdated_id>\d+)/$', views.functionupdated_del, name='functionupdated_del'),
         url(r'^function/updated/del_check/(?P<target_id>\d+)/(?P<link_id>\d+)/$', views.functionupdated_del_check, name='functionupdated_del_check'),
+
+        url(r'search/$',views.search, name='search'),  # 検索
+#        url(r'result/$',views.result, name='result'), #結果
 ]#)

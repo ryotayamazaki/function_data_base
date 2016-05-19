@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block title %}関数検索{% endblock title %}
+
+{% block content %}
+<h3>関数名検索</h3>
+<form action="{% url 'data_base:search' %}" method='POST' class="form-horizontal" role="form">
+<label>関数名：</label>
+  {% csrf_token %}
+    {{ form.function_name }}
+    <input type='submit' value='検索' class="btn btn-primary"/>
+</form>
+{% endblock content%}
